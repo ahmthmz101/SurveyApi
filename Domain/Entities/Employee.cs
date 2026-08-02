@@ -5,7 +5,7 @@ namespace Domain.Entities;
 public class Employee : BaseEntity
 {
     public int RoleId { get; private set; }
-    public Role Role { get; private set; }
+    public Role Role { get; private set; } = null!;
     
     public string Name { get; private set; }
     public string Surname { get; private set; }
@@ -31,11 +31,11 @@ public class Employee : BaseEntity
         string phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Name cannot empty. ");
+            throw new ArgumentException("Name cannot empty ");
         if (string.IsNullOrWhiteSpace(email))
-            throw new ArgumentException("Email cannot empty. ");
+            throw new ArgumentException("Email cannot empty ");
         if (!email.Contains("@"))
-            throw new ArgumentException("The email address must contain an @ symbol.");
+            throw new ArgumentException("The email address must contain an @ symbol ");
 
         RoleId = roleId;
         Name = name;
@@ -45,5 +45,28 @@ public class Employee : BaseEntity
         PhoneNumber = phoneNumber;
 
         IsActive = true;
+    }
+
+    public void Update(
+        string name,
+        string surname,
+        string email,
+        string phoneNumber)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Name cannot empty ");
+        if (string.IsNullOrWhiteSpace(surname))
+            throw new ArgumentException("Surname cannot empty ");
+        if (string.IsNullOrWhiteSpace(email))
+            throw new ArgumentException("Email cannot empty ");
+        if (!email.Contains("@"))
+            throw new ArgumentException("The email address must contain an @ symbol ");
+
+        Name = name;
+        Surname = surname;
+        Email = email;
+        PhoneNumber = phoneNumber;
+
+        UpdatedAt = DateTime.UtcNow;
     }
 }
